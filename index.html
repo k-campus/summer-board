@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>K-campus Summer Board</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<style>
+  @font-face { font-family: "Objektiv"; src: url("ObjektivMk3_Lt.ttf") format("truetype"); font-weight: 300; }
+  @font-face { font-family: "Objektiv"; src: url("ObjektivMk3_Md.ttf") format("truetype"); font-weight: 500; }
+  @font-face { font-family: "Objektiv"; src: url("ObjektivMk3_Bd.ttf") format("truetype"); font-weight: 700; }
+  @font-face { font-family: "Objektiv XBold"; src: url("ObjektivMk1_XBold.ttf") format("truetype"); font-weight: 800; }
+  body { margin: 0; padding: 2rem; font-family: "Objektiv", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #F7F8F6; color: #1A1A18; }
+  .sb-wrap { max-width: 900px; margin: 0 auto; padding: 1rem 0; }
+  .sb-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; }
+  .sb-title { font-family: "Objektiv XBold", "Objektiv", sans-serif; font-size: 21px; font-weight: 800; margin: 0 0 2px; }
+  .sb-sub { font-size: 13px; color: #5F5E5A; margin: 0; }
+  .sb-section { margin-bottom: 1.75rem; }
+  .sb-cat-label { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding-left: 8px; border-left: 3px solid #00D984; }
+  .sb-cat-title { font-size: 13px; font-weight: 600; letter-spacing: .02em; }
+  .sb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 8px; }
+  @media (max-width: 640px) {
+    body { padding: 1.25rem 1rem; }
+    .sb-grid { display: flex; overflow-x: auto; gap: 8px; padding-bottom: 4px; scroll-snap-type: x proximate; -webkit-overflow-scrolling: touch; }
+    .sb-grid .sb-card, .sb-grid .sb-empty { flex: 0 0 150px; width: 150px; scroll-snap-align: start; }
+    .sb-bar { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+    .sb-filter { flex-shrink: 0; }
+    .sb-cta { flex-direction: column; align-items: flex-start; }
+    .sb-cta-btn { width: 100%; text-align: center; }
+  }
+  .sb-card { background: #FFFFFF; border: 0.5px solid #E3E2DD; border-radius: 12px; padding: 10px 12px; cursor: pointer; transition: border-color .15s; position: relative; overflow: hidden; display: block; text-decoration: none; color: inherit; }
+  .sb-card * { text-decoration: none; color: inherit; }
+  .sb-card:hover { border-color: #00D984; }
+  .sb-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--bar-color, #00D984); }
+  .sb-card-tag { font-size: 10px; color: #888780; margin: 6px 0 4px; }
+  .sb-card-title { font-size: 12px; font-weight: 600; line-height: 1.4; margin: 0 0 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .sb-card-meta { font-size: 11px; color: #888780; display: flex; align-items: center; justify-content: space-between; }
+  .sb-card-views { display: flex; align-items: center; gap: 3px; }
+  .sb-empty { background: #EBFBF3; border: 1.5px dashed #00D984; border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 82px; cursor: pointer; gap: 6px; text-decoration: none; }
+  .sb-empty-label { font-size: 11px; color: #016B43; text-align: center; line-height: 1.4; font-weight: 600; }
+  .sb-plus-circle { width: 28px; height: 28px; border-radius: 50%; background: #00D984; display: flex; align-items: center; justify-content: center; color: #013621; font-size: 17px; font-weight: 700; line-height: 1; }
+  .sb-bar { display: flex; gap: 8px; margin-bottom: 1.75rem; flex-wrap: wrap; }
+  .sb-filter { font-size: 12px; border: 0.5px solid #D3D1C7; border-radius: 20px; padding: 4px 12px; background: #FFFFFF; color: #5F5E5A; cursor: pointer; }
+  .sb-filter.active { background: #00D984; color: #013621; border-color: #00D984; font-weight: 600; }
+  .sb-spark { color: #FFC72C; font-size: 13px; margin-left: 2px; }
+  .sb-cta { margin-top: 1.5rem; padding: 22px 24px; border-radius: 16px; background: #E8F4D2; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .sb-cta-text { font-size: 13px; color: #4D5E33; line-height: 1.6; margin: 0; max-width: 480px; }
+  .sb-cta-text b { color: #2B3D12; font-family: "Objektiv XBold", "Objektiv", sans-serif; font-weight: 800; font-size: 14px; display: block; margin-bottom: 4px; }
+  .sb-cta-btn { flex-shrink: 0; font-size: 12px; font-weight: 600; color: #2B3D12; border-radius: 8px; padding: 9px 18px; background: #FFFFFF; border: 0.5px solid rgba(92,138,31,0.3); cursor: pointer; white-space: nowrap; text-decoration: none; }
+  .sb-intro { background: #E8F4D2; border-radius: 16px; padding: 22px 24px; margin-bottom: 1.75rem; position: relative; overflow: hidden; }
+  .sb-mascot { position: absolute; right: 14px; bottom: 0; width: 92px; height: auto; pointer-events: none; }
+  .sb-intro-eyebrow { font-size: 11px; font-weight: 600; color: #5C8A1F; letter-spacing: .04em; text-transform: uppercase; margin: 0 0 8px; }
+  .sb-intro-title { font-family: "Objektiv XBold", "Objektiv", sans-serif; font-size: 19px; font-weight: 800; color: #2B3D12; margin: 0 0 8px; line-height: 1.4; }
+  .sb-intro-body { font-size: 13px; color: #4D5E33; line-height: 1.6; margin: 0 0 16px; max-width: 560px; }
+  .sb-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .sb-step { background: rgba(255,255,255,0.55); border-radius: 10px; padding: 10px 12px; }
+  .sb-step-num { font-size: 11px; font-weight: 700; color: #5C8A1F; margin: 0 0 4px; }
+  .sb-step-text { font-size: 12px; color: #2B3D12; line-height: 1.4; margin: 0; }
+  /* reward cards */
+  .sb-reward { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.6); border: 0.5px solid rgba(92,138,31,0.3); border-radius: 10px; padding: 10px 14px; margin-bottom: 10px; }
+  .sb-reward-icon { font-size: 16px; }
+  .sb-reward-text { font-size: 12px; color: #2B3D12; margin: 0; line-height: 1.5; }
+  .sb-reward-text b { color: #5C8A1F; }
+  .sb-reward-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 4px; }
+  .sb-reward-card { background: rgba(255,255,255,0.7); border: 0.5px solid rgba(92,138,31,0.25); border-radius: 12px; padding: 14px 10px 12px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .sb-reward-card-emoji { font-size: 26px; line-height: 1; }
+  .sb-reward-card-name { font-size: 11px; font-weight: 600; color: #2B3D12; line-height: 1.35; }
+  .sb-reward-card-count { font-size: 10.5px; font-weight: 700; color: #5C8A1F; }
+
+  .sb-notes { margin-top: 14px; padding-top: 14px; border-top: 0.5px solid rgba(92,138,31,0.2); }
+  .sb-notes-item { display: flex; gap: 8px; margin-bottom: 6px; }
+  .sb-notes-dot { color: #5C8A1F; font-size: 11px; line-height: 1.6; }
+  .sb-notes-text { font-size: 11.5px; color: #5C6B45; line-height: 1.6; margin: 0; }
+  .sb-intro-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-size: 13px; font-weight: 600; color: #013621; background: #00D984; border-radius: 8px; padding: 10px 20px; text-decoration: none; }
+  .sb-see-more { display: block; margin: 10px 0 1.75rem; background: none; border: none; color: #5C8A1F; font-size: 12px; font-weight: 600; cursor: pointer; padding: 4px 0; }
+  .sb-see-more:hover { text-decoration: underline; }
+  .sb-section.theme-pink .sb-cat-label { border-left-color: #E8849F; }
+  .sb-section.theme-pink .sb-card::before { background: #E8849F; }
+  .sb-section.theme-pink .sb-card:hover { border-color: #E8849F; }
+  .sb-section.theme-blue .sb-cat-label { border-left-color: #5FA3D6; }
+  .sb-section.theme-blue .sb-card::before { background: #5FA3D6; }
+  .sb-section.theme-blue .sb-card:hover { border-color: #5FA3D6; }
+  .sb-section.theme-mint .sb-cat-label { border-left-color: #4BB58A; }
+  .sb-section.theme-mint .sb-card::before { background: #4BB58A; }
+  .sb-section.theme-mint .sb-card:hover { border-color: #4BB58A; }
+  .sb-section.theme-yellow .sb-cat-label { border-left-color: #E0B23C; }
+  .sb-section.theme-yellow .sb-card::before { background: #E0B23C; }
+  .sb-section.theme-yellow .sb-card:hover { border-color: #E0B23C; }
+  .sb-section.theme-lavender .sb-cat-label { border-left-color: #A186D6; }
+  .sb-section.theme-lavender .sb-card::before { background: #A186D6; }
+  .sb-section.theme-lavender .sb-card:hover { border-color: #A186D6; }
+  .sb-tbd { color: #C23B3B; font-weight: 700; }
+  .sb-floating-cta { position: fixed; bottom: 22px; right: 22px; display: inline-flex; align-items: center; gap: 6px; background: #00D984; color: #013621; font-size: 13px; font-weight: 700; padding: 13px 20px; border-radius: 30px; text-decoration: none; box-shadow: 0 4px 16px rgba(1,54,33,0.25); z-index: 100; transition: transform .15s; }
+  .sb-floating-cta:hover { transform: scale(1.04); }
+  @media (max-width: 640px) {
+    .sb-floating-cta { left: 16px; right: 16px; bottom: 16px; justify-content: center; width: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="sb-wrap" id="top">
+  <div class="sb-header">
+    <div>
+      <p class="sb-title">K-campus Summer Board<span class="sb-spark">&#10022;</span></p>
+      <p class="sb-sub">Real summer-in-Korea stories from international students</p>
+    </div>
+  </div>
+
+  <div class="sb-intro">
+    <img class="sb-mascot" src="jandi_mascot.png" alt="">
+    <p class="sb-intro-eyebrow">Summer 2026 &middot; Limited-time event</p>
+    <p class="sb-intro-title">Every summer story you share gets its own spot on this board &mdash; and a shot at a reward.</p>
+    <p class="sb-intro-body">This board is built entirely from real reviews by K-campus students. Pick a category below, write about your own summer in Korea, and watch your story show up here.</p>
+    <div class="sb-steps">
+      <div class="sb-step"><p class="sb-step-num">Step 1</p><p class="sb-step-text">Pick a category and write your story</p></div>
+      <div class="sb-step"><p class="sb-step-num">Step 2</p><p class="sb-step-text">Within +2 days, it's reviewed and added to your category</p></div>
+      <div class="sb-step"><p class="sb-step-num">Step 3</p><p class="sb-step-text">You automatically get 1 lucky draw entry</p></div>
+    </div>
+    <div class="sb-reward">
+      <span class="sb-reward-icon">&#127881;</span>
+      <p class="sb-reward-text">Every story posted this summer enters a <b>random prize draw</b> &mdash; winners announced at the end of the event.</p>
+    </div>
+    <div class="sb-reward-grid">
+      <div class="sb-reward-card">
+        <span class="sb-reward-card-emoji">🍧</span>
+        <span class="sb-reward-card-name">Bingsu voucher</span>
+        <span class="sb-reward-card-count">× 5 winners</span>
+      </div>
+      <div class="sb-reward-card">
+        <span class="sb-reward-card-emoji">🌀</span>
+        <span class="sb-reward-card-name">Mini handy fan</span>
+        <span class="sb-reward-card-count">× 5 winners</span>
+      </div>
+      <div class="sb-reward-card">
+        <span class="sb-reward-card-emoji">🫧</span>
+        <span class="sb-reward-card-name">Cooling mask pack</span>
+        <span class="sb-reward-card-count">× 10 winners</span>
+      </div>
+    </div>
+
+    <div class="sb-notes">
+      <div class="sb-notes-item"><span class="sb-notes-dot">&#9679;</span><p class="sb-notes-text">Posted more than once? Each story you publish adds 1 more entry &mdash; automatically, no extra steps.</p></div>
+      <div class="sb-notes-item"><span class="sb-notes-dot">&#9679;</span><p class="sb-notes-text">20 winners will be randomly drawn from all entries when the event ends.</p></div>
+    </div>
+    <a class="sb-intro-cta" href="https://kcampus.kr/ko/real-life-reviews/new-draft?utm_medium=github">Add your story &rarr;</a>
+  </div>
+
+  <div class="sb-bar">
+    <span class="sb-filter active" data-target="top">All</span>
+    <span class="sb-filter" data-target="cat-events">Events &amp; Festivals</span>
+    <span class="sb-filter" data-target="cat-trips">City Trips</span>
+    <span class="sb-filter" data-target="cat-activities">Seoul Activities</span>
+    <span class="sb-filter" data-target="cat-food">Summer Food</span>
+    <span class="sb-filter" data-target="cat-heat">Beat the Heat</span>
+  </div>
+
+  <div class="sb-section theme-pink" id="cat-events">
+    <div class="sb-cat-label"><span class="sb-cat-title">Events &amp; Festivals</span></div>
+    <div class="sb-grid" id="grid-events">
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/A-Day-at-2024-Waterbomb-Seoul-(feat.-K-pop-Celebs)-4227?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; Sweethome</p>
+        <p class="sb-card-title">A Day at 2024 Waterbomb Seoul</p>
+        <div class="sb-card-meta"><span>Jul</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Summer-in-Seoul:-Events-for-Expats,-Travellers,-and-Culture-Lovers-6940?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; shichutian02</p>
+        <p class="sb-card-title">Summer in Seoul: Events for Expats</p>
+        <div class="sb-card-meta"><span>Jul</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Waterbomb-the-perfect-Korean-Summer-festival-4272?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; Luna</p>
+        <p class="sb-card-title">Waterbomb &mdash; the perfect Korean Summer festival</p>
+        <div class="sb-card-meta"><span>Jul</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Watching-(for-the-first-time)-a-Baseball-Game-in-Korea-7162?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; shichutian02</p>
+        <p class="sb-card-title">Watching a Baseball Game in Korea</p>
+        <div class="sb-card-meta"><span>Aug</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/When-Summer-Sun-Burns-Red-Red,-Festivals-Bring-the-Cool-Cool-9915?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2026 &middot; EditorLukie</p>
+        <p class="sb-card-title">When Summer Sun Burns Red Red, Festivals Bring the Cool Cool</p>
+        <div class="sb-card-meta"><span>Jun</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/2025-비엔날레-문화콘서트-_-예술로-여름휴가-7196?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; ngocminhchau</p>
+        <p class="sb-card-title">2025 Biennale Culture Concert: A Summer Vacation Through Art</p>
+        <div class="sb-card-meta"><span>Aug</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Behind-the-AELA-Booth:-What-the-Ewha-Festival-Taught-Me-About-Community-9906?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2026 &middot; SusanSarmi</p>
+        <p class="sb-card-title">Behind the AELA Booth: What the Ewha Festival Taught Me About Community</p>
+        <div class="sb-card-meta"><span>May</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/[Registration-Open]-Be-a-Media-Artist-at-the-Square!---Shining-Playground-7167?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; ngocminhchau</p>
+        <p class="sb-card-title">Be a Media Artist at the Square! Shining Playground</p>
+        <div class="sb-card-meta"><span>Aug</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Seoul-Summer-Escapes:-Fun,-Fashion,-and-Freebies!-4277?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; Sampriti</p>
+        <p class="sb-card-title">Seoul Summer Escapes: Fun, Fashion, and Freebies!</p>
+        <div class="sb-card-meta"><span>Jul</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Summertime-in-Seoul-4259?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; jaeeerim</p>
+        <p class="sb-card-title">Summertime in Seoul</p>
+        <div class="sb-card-meta"><span>Jul</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/K-campus-x-1883-Incheon-McGang-Party-3918?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; K-campus</p>
+        <p class="sb-card-title">K-campus x 1883 Incheon McGang Party</p>
+        <div class="sb-card-meta"><span>Incheon</span></div>
+      </a>
+    </div>
+  </div>
+    <button class="sb-see-more" type="button" data-grid="grid-events" data-more="See 6 more &rarr;" data-less="Show less">See 6 more &rarr;</button>
+
+  <div class="sb-section theme-blue" id="cat-trips">
+    <div class="sb-cat-label"><span class="sb-cat-title">City Trips</span></div>
+    <div class="sb-grid" id="grid-trips">
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/K-Campus-Global-Youth-in-Jeju-Tour:-Reflections-from-the-Island-6786?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; SuZiXuan</p>
+        <p class="sb-card-title">K-Campus Global Youth in Jeju Tour</p>
+        <div class="sb-card-meta"><span>Jeju</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Perfect-Summer-Vacation:-Travel-to-Chuncheon-4252?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; dalarrad</p>
+        <p class="sb-card-title">Perfect Summer Vacation: Travel to Chuncheon</p>
+        <div class="sb-card-meta"><span>Chuncheon</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/12-Hours-in-Taebaek:-A-Fruitful-Day-Trip-9701?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2026 &middot; meganh</p>
+        <p class="sb-card-title">12 Hours in Taebaek: A Fruitful Day Trip</p>
+        <div class="sb-card-meta"><span>Taebaek</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Not-Just-Seoul:-Why-Sokcho-Should-Be-on-Your-Korea-Bucket-List-6695?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; KatyaYadak</p>
+        <p class="sb-card-title">Not Just Seoul: Why Sokcho Should Be on Your Bucket List</p>
+        <div class="sb-card-meta"><span>Sokcho</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Hidden-Paradise-in-Goheung:-Ssukseom-Island-6810?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; Mary123</p>
+        <p class="sb-card-title">Hidden Paradise in Goheung: Ssukseom Island</p>
+        <div class="sb-card-meta"><span>Goheung</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Cute-Cafes-&amp;-Restaurants-in-Jeju-4278?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; Peter&rsquo;sGuardian_461</p>
+        <p class="sb-card-title">Cute Cafes &amp; Restaurants in Jeju</p>
+        <div class="sb-card-meta"><span>Jeju</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/A-Must-Visit-City-in-Korea---Gyeongju-6962?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; aidcore</p>
+        <p class="sb-card-title">A Must-Visit City in Korea &mdash; Gyeongju</p>
+        <div class="sb-card-meta"><span>Gyeongju</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Don't-know-where-to-go?-Busan-might-be-your-best-decision!-4237?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; kubl1fe</p>
+        <p class="sb-card-title">Don't know where to go? Busan might be your best decision!</p>
+        <div class="sb-card-meta"><span>Busan</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/A-Charm-Different-from-Beaches:-Bookstores-in-Busan-7175?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; shichutian02</p>
+        <p class="sb-card-title">A Charm Different from Beaches: Bookstores in Busan</p>
+        <div class="sb-card-meta"><span>Busan</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Splashing-&amp;-Spelunking:-2025-Global-Youth-in-Jeju-Tour-6801?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; Sasha</p>
+        <p class="sb-card-title">Splashing &amp; Spelunking: 2025 Global Youth in Jeju Tour</p>
+        <div class="sb-card-meta"><span>Jeju</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/ITINERARY-FOR-A-PERFECT-SUMMER-VACATION-IN-DAEJEON-4249?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; Duches_ann</p>
+        <p class="sb-card-title">Itinerary for a Perfect Summer Vacation in Daejeon</p>
+        <div class="sb-card-meta"><span>Daejeon</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Discovering-Jeonju:-The-Perfect-Summer-Getaway-in-Korea-4270?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; anel.batayeva</p>
+        <p class="sb-card-title">Discovering Jeonju: The Perfect Summer Getaway</p>
+        <div class="sb-card-meta"><span>Jeonju</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Gyeongju:-the-APEC-Photo-Essay-Tour-7133?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; Alinsen</p>
+        <p class="sb-card-title">Gyeongju: the APEC Photo Essay Tour</p>
+        <div class="sb-card-meta"><span>Gyeongju</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Gangwon-Taxi-Tour-(4):-Sokcho-Beach-/-속초해변-6562?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; kc9080</p>
+        <p class="sb-card-title">Gangwon Taxi Tour (4): Sokcho Beach</p>
+        <div class="sb-card-meta"><span>Sokcho</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Gangwon-taxi-tour-(2):-Sokcho-Tourist-Fish-Market-6559?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; kc9080</p>
+        <p class="sb-card-title">Gangwon Taxi Tour (2): Sokcho Fish Market</p>
+        <div class="sb-card-meta"><span>Sokcho</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Day-trip-to-Jecheon-6557?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; kc9080</p>
+        <p class="sb-card-title">Day Trip to Jecheon</p>
+        <div class="sb-card-meta"><span>Jecheon</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Tips-for-a-Perfect-Summer-in-Korea-4271?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; Milenkasc</p>
+        <p class="sb-card-title">Tips for a Perfect Summer in Korea</p>
+        <div class="sb-card-meta"><span>Jul</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Tips-and-Places-for-Summer-in-Korea!-4268?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; KerimelremPicakli</p>
+        <p class="sb-card-title">Tips and Places for Summer in Korea!</p>
+        <div class="sb-card-meta"><span>Jul</span></div>
+      </a>
+    </div>
+  </div>
+    <button class="sb-see-more" type="button" data-grid="grid-trips" data-more="See 13 more &rarr;" data-less="Show less">See 13 more &rarr;</button>
+
+  <div class="sb-section theme-mint" id="cat-activities">
+    <div class="sb-cat-label"><span class="sb-cat-title">Seoul Activities</span></div>
+    <div class="sb-grid" id="grid-activities">
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/A-Tour-of-Safety-(and-Stamps):-Jongno's-Police-Station-Tour-7131?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; shichutian02</p>
+        <p class="sb-card-title">A Tour of Safety (and Stamps): Jongno&rsquo;s Police Station Tour</p>
+        <div class="sb-card-meta"><span>Jongno</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Why-Chungmuro-is-Seoul's-Best-Kept-Secret-6889?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; Sunanda7</p>
+        <p class="sb-card-title">Why Chungmuro is Seoul&rsquo;s Best-Kept Secret</p>
+        <div class="sb-card-meta"><span>Chungmuro</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/From-vinyl-to-cassettes:-3-music-cafes-in-Seoul-you-need-to-try-9735?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2026 &middot; Editor TH</p>
+        <p class="sb-card-title">From vinyl to cassettes: 3 music cafes in Seoul</p>
+        <div class="sb-card-meta"><span>Hongdae&middot;Seongsu</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/A-Day-Out-in-Seoul-for-Under-10,000W---Han-River-Vibes-6706?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; Lejla</p>
+        <p class="sb-card-title">A Day Out in Seoul for Under &#8361;10,000 &ndash; Han River Vibes</p>
+        <div class="sb-card-meta"><span>Han River</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Weekend-Picnic-at-Han-River-for-10,000won-6690?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; bngng</p>
+        <p class="sb-card-title">Weekend Picnic at Han River for &#8361;10,000</p>
+        <div class="sb-card-meta"><span>Han River</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Seoul-City-Wall-Stamp-Tour-7168?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; baohan2112</p>
+        <p class="sb-card-title">Seoul City Wall Stamp Tour</p>
+        <div class="sb-card-meta"><span>Aug</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Become-a-secret-agent-on-subway?-Yep,-there's-a-stamp-tour-for-that.-7208?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; EditorLukie</p>
+        <p class="sb-card-title">Become a Secret Agent on the Subway? Yep, There&rsquo;s a Stamp Tour for That.</p>
+        <div class="sb-card-meta"><span>Aug</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Summer-in-Korea:-Tips-for-art-lovers-4244?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; Daniela</p>
+        <p class="sb-card-title">Summer in Korea: Tips for Art Lovers</p>
+        <div class="sb-card-meta"><span>Jul</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Korean-Summer-Escapades:-The-Best-Ways-to-Enjoy-the-Season-4276?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; salonie.sk</p>
+        <p class="sb-card-title">Korean Summer Escapades: Best Ways to Enjoy the Season</p>
+        <div class="sb-card-meta"><span>Han River</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/You-Must-Drop-by-This-Place-If-You're-Ever-in-Bukchon-Hanok-Village!-6894?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; meganh</p>
+        <p class="sb-card-title">You Must Drop by This Place in Bukchon Hanok Village!</p>
+        <div class="sb-card-meta"><span>Bukchon</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Lotus-Lantern-Festival-6588?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; tanyac</p>
+        <p class="sb-card-title">Lotus Lantern Festival</p>
+        <div class="sb-card-meta"><span>May</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Unforgettable-SM-Concert-in-Seoul-6569?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; seohyunee</p>
+        <p class="sb-card-title">Unforgettable SM Concert in Seoul</p>
+        <div class="sb-card-meta"><span>May</span></div>
+      </a>
+    </div>
+  </div>
+    <button class="sb-see-more" type="button" data-grid="grid-activities" data-more="See 7 more &rarr;" data-less="Show less">See 7 more &rarr;</button>
+
+  <div class="sb-section theme-yellow" id="cat-food">
+    <div class="sb-cat-label"><span class="sb-cat-title">Summer Food</span></div>
+    <div class="sb-grid">
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/5-Korean-Cold-Noodles-to-Survive-the-Korean-Summer-4205?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; Elisansnty</p>
+        <p class="sb-card-title">5 Korean Cold Noodles to Survive the Korean Summer</p>
+        <div class="sb-card-meta"><span>Nationwide</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Beat-the-heat-with-Patbingsu-4269?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; leetaemin0930</p>
+        <p class="sb-card-title">Beat the heat with Patbingsu</p>
+        <div class="sb-card-meta"><span>Insadong</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Sweet,-wild-&amp;-unexpected:-Five-unique-bingsu-spots-to-beat-the-summer-heat-10058?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2026 &middot; Editor_Cho</p>
+        <p class="sb-card-title">Five unique bingsu spots to beat the summer heat</p>
+        <div class="sb-card-meta"><span>Seoul</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Korean-summer-delicacy---콩국수-7110?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; Sharvani</p>
+        <p class="sb-card-title">Korean Summer Delicacy &mdash; Kongguksu (Cold Soybean Noodles)</p>
+        <div class="sb-card-meta"><span>Nationwide</span></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="sb-section theme-lavender" id="cat-heat">
+    <div class="sb-cat-label"><span class="sb-cat-title">Beat the Heat Tips</span></div>
+    <div class="sb-grid" id="grid-heat">
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Rainy-Day-Culture-Shock-4387?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; Sasha</p>
+        <p class="sb-card-title">Rainy Day Culture Shock</p>
+        <div class="sb-card-meta"><span>Seoul</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Beat-the-Heat:-Best-Indoor-Activities-to-do-During-the-Summer-4206?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; Sasha</p>
+        <p class="sb-card-title">Beat the Heat: Best Indoor Activities During Summer</p>
+        <div class="sb-card-meta"><span>Seoul</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Things-to-do-on-a-Rainy-Day-in-Seoul-4265?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; Monineath</p>
+        <p class="sb-card-title">Things to do on a Rainy Day in Seoul</p>
+        <div class="sb-card-meta"><span>Seoul</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Product-Recommendations-to-Survive-the-Summer-Heat-4344?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; Valerie</p>
+        <p class="sb-card-title">Product Recommendations to Survive the Summer Heat</p>
+        <div class="sb-card-meta"><span>Aug</span></div>
+      </a>
+      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Road-Trip-During-Korean-Rainy-Summer-4266?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2024 &middot; MelisaDuman</p>
+        <p class="sb-card-title">Road Trip During Korean Rainy Summer</p>
+        <div class="sb-card-meta"><span>Jul</span></div>
+      </a>
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/A-Rainy-Day-as-an-International-student-6583?utm_medium=github" target="_blank" rel="noopener">
+        <p class="sb-card-tag">2025 &middot; mduyentr03</p>
+        <p class="sb-card-title">A Rainy Day as an International Student</p>
+        <div class="sb-card-meta"><span>May</span></div>
+      </a>
+    </div>
+  </div>
+    <button class="sb-see-more" type="button" data-grid="grid-heat" data-more="See 1 more &rarr;" data-less="Show less">See 1 more &rarr;</button>
+
+  <div class="sb-cta">
+    <p class="sb-cta-text"><b>Make this summer count.</b>Read more real stories from international students across Korea &mdash; and whenever you're ready, post your own. There's no deadline to join: every story earns a lucky draw entry, all summer long.</p>
+    <a class="sb-cta-btn" href="https://kcampus.kr/ko/real-life-reviews?utm_medium=github">Browse all reviews &rarr;</a>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.sb-filter').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.sb-filter').forEach(function (f) { f.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.target);
+      if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  document.querySelectorAll('.sb-see-more').forEach(function (btn) {
+    var expanded = false;
+    btn.addEventListener('click', function () {
+      var grid = document.getElementById(btn.dataset.grid);
+      if (!grid) return;
+      expanded = !expanded;
+      grid.querySelectorAll('.sb-card-extra').forEach(function (card) {
+        card.style.display = expanded ? '' : 'none';
+      });
+      btn.textContent = expanded ? btn.dataset.less : btn.dataset.more;
+    });
+  });
+</script>
+<a class="sb-floating-cta" href="https://kcampus.kr/ko/real-life-reviews/new-draft?utm_medium=github">Add your story &rarr;</a>
+</body>
+</html>
