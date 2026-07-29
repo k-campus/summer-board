@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>K-campus Summer Board</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
 <style>
@@ -19,13 +20,17 @@
   .sb-cat-title { font-size: 13px; font-weight: 600; letter-spacing: .02em; }
   .sb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 8px; }
   @media (max-width: 640px) {
-    body { padding: 1.25rem 1rem; }
-    .sb-grid { display: flex; overflow-x: auto; gap: 8px; padding-bottom: 4px; scroll-snap-type: x proximate; -webkit-overflow-scrolling: touch; }
+    body { padding: 1.25rem 1rem 90px; }
+    .sb-grid { display: flex; overflow-x: auto; gap: 8px; padding-bottom: 4px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
     .sb-grid .sb-card, .sb-grid .sb-empty { flex: 0 0 150px; width: 150px; scroll-snap-align: start; }
     .sb-bar { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
     .sb-filter { flex-shrink: 0; }
     .sb-cta { flex-direction: column; align-items: flex-start; }
     .sb-cta-btn { width: 100%; text-align: center; }
+    .sb-mascot { width: 72px; right: 8px; }
+    .sb-intro-body { max-width: 100%; padding-right: 80px; }
+    .sb-reward-grid { grid-template-columns: 1fr; }
+    .sb-steps { grid-template-columns: 1fr; }
   }
   .sb-card { background: #FFFFFF; border: 0.5px solid #E3E2DD; border-radius: 12px; padding: 10px 12px; cursor: pointer; transition: border-color .15s; position: relative; overflow: hidden; display: block; text-decoration: none; color: inherit; }
   .sb-card * { text-decoration: none; color: inherit; }
@@ -51,7 +56,7 @@
   .sb-intro-eyebrow { font-size: 11px; font-weight: 600; color: #5C8A1F; letter-spacing: .04em; text-transform: uppercase; margin: 0 0 8px; }
   .sb-intro-title { font-family: "Objektiv XBold", "Objektiv", sans-serif; font-size: 19px; font-weight: 800; color: #2B3D12; margin: 0 0 8px; line-height: 1.4; }
   .sb-intro-body { font-size: 13px; color: #4D5E33; line-height: 1.6; margin: 0 0 16px; max-width: 560px; }
-  .sb-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .sb-steps { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 16px; }
   .sb-step { background: rgba(255,255,255,0.55); border-radius: 10px; padding: 10px 12px; }
   .sb-step-num { font-size: 11px; font-weight: 700; color: #5C8A1F; margin: 0 0 4px; }
   .sb-step-action { font-size: 13px; font-weight: 700; color: #2B3D12; margin: 0 0 3px; }
