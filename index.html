@@ -54,7 +54,8 @@
   .sb-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
   .sb-step { background: rgba(255,255,255,0.55); border-radius: 10px; padding: 10px 12px; }
   .sb-step-num { font-size: 11px; font-weight: 700; color: #5C8A1F; margin: 0 0 4px; }
-  .sb-step-text { font-size: 12px; color: #2B3D12; line-height: 1.4; margin: 0; }
+  .sb-step-action { font-size: 13px; font-weight: 700; color: #2B3D12; margin: 0 0 3px; }
+  .sb-step-text { font-size: 12px; color: #4D5E33; line-height: 1.4; margin: 0; }
   /* reward cards */
   .sb-reward { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.6); border: 0.5px solid rgba(92,138,31,0.3); border-radius: 10px; padding: 10px 14px; margin-bottom: 10px; }
   .sb-reward-icon { font-size: 16px; }
@@ -101,23 +102,22 @@
   <div class="sb-header">
     <div>
       <p class="sb-title">K-campus Summer Board<span class="sb-spark">&#10022;</span></p>
-      <p class="sb-sub">Real summer-in-Korea stories from international students</p>
+      <p class="sb-sub">Summer is better when it's shared with our community.<br>Tell your story for a chance to win prizes!</p>
     </div>
   </div>
 
   <div class="sb-intro">
     <img class="sb-mascot" src="jandi_mascot.png" alt="">
-    <p class="sb-intro-eyebrow">Summer 2026 &middot; Limited-time event</p>
-    <p class="sb-intro-title">Every summer story you share gets its own spot on this board &mdash; and a shot at a reward.</p>
-    <p class="sb-intro-body">This board is built entirely from real reviews by K-campus students. Pick a category below, write about your own summer in Korea, and watch your story show up here.</p>
+    <p class="sb-intro-eyebrow">Summer 2026 &middot; Season Special Event</p>
+    <p class="sb-intro-title">Share your summer. We'll put it on the board &mdash; and enter you into our lucky draw.</p>
+    <p class="sb-intro-body">This board is built on Real Life Reviews from international students.<br>Ready to add yours and win summer essentials? Just follow these three steps.</p>
     <div class="sb-steps">
-      <div class="sb-step"><p class="sb-step-num">Step 1</p><p class="sb-step-text">Pick a category and write your story</p></div>
-      <div class="sb-step"><p class="sb-step-num">Step 2</p><p class="sb-step-text">Within +2 days, it's reviewed and added to your category</p></div>
-      <div class="sb-step"><p class="sb-step-num">Step 3</p><p class="sb-step-text">You automatically get 1 lucky draw entry</p></div>
+      <div class="sb-step"><p class="sb-step-num">Step 1</p><p class="sb-step-action">WRITE.</p><p class="sb-step-text">Write about your experience on any of the 5 categories below.</p></div>
+      <div class="sb-step"><p class="sb-step-num">Step 2</p><p class="sb-step-action">GET FEATURED.</p><p class="sb-step-text">K-campus will add your review to the Summer Board within 2 days!</p></div>
+      <div class="sb-step"><p class="sb-step-num">Step 3</p><p class="sb-step-action">WAIT FOR THE LUCKY DRAW!</p><p class="sb-step-text">Every published story earns one lucky draw entry. Feel free to share more summer stories!</p></div>
     </div>
     <div class="sb-reward">
-      <span class="sb-reward-icon">&#127881;</span>
-      <p class="sb-reward-text">Every story posted this summer enters a <b>random prize draw</b> &mdash; winners announced at the end of the event.</p>
+      <p class="sb-reward-text"><b>What's in the prize pool? 🤿 (20 winners)</b></p>
     </div>
     <div class="sb-reward-grid">
       <div class="sb-reward-card">
@@ -132,14 +132,14 @@
       </div>
       <div class="sb-reward-card">
         <span class="sb-reward-card-emoji">🫧</span>
-        <span class="sb-reward-card-name">Cooling mask pack</span>
+        <span class="sb-reward-card-name">Cooling mask sheets</span>
         <span class="sb-reward-card-count">× 10 winners</span>
       </div>
     </div>
 
     <div class="sb-notes">
-      <div class="sb-notes-item"><span class="sb-notes-dot">&#9679;</span><p class="sb-notes-text">Posted more than once? Each story you publish adds 1 more entry &mdash; automatically, no extra steps.</p></div>
-      <div class="sb-notes-item"><span class="sb-notes-dot">&#9679;</span><p class="sb-notes-text">20 winners will be randomly drawn from all entries when the event ends.</p></div>
+      <div class="sb-notes-item"><span class="sb-notes-dot">&#9679;</span><p class="sb-notes-text">Share a review between Aug. 3 &ndash; 31, 2026 and earn a lucky draw entry.</p></div>
+      <div class="sb-notes-item"><span class="sb-notes-dot">&#9679;</span><p class="sb-notes-text">Every published review earns 1 lucky draw entry. The more summer stories you share, the more chances you have to win!</p></div>
     </div>
     <a class="sb-intro-cta" href="https://kcampus.kr/ko/real-life-reviews/new-draft?utm_medium=github">Add your story &rarr;</a>
   </div>
@@ -150,7 +150,7 @@
     <span class="sb-filter" data-target="cat-trips">City Trips</span>
     <span class="sb-filter" data-target="cat-activities">Seoul Activities</span>
     <span class="sb-filter" data-target="cat-food">Summer Food</span>
-    <span class="sb-filter" data-target="cat-heat">Beat the Heat</span>
+    <span class="sb-filter" data-target="cat-heat">Beat the Heat Tips</span>
   </div>
 
   <div class="sb-section theme-pink" id="cat-events">
@@ -406,7 +406,7 @@
   </div>
 
   <div class="sb-section theme-lavender" id="cat-heat">
-    <div class="sb-cat-label"><span class="sb-cat-title">Beat the Heat Tips</span></div>
+    <div class="sb-cat-label"><span class="sb-cat-title">Beat the Heat (Rain &amp; Heat)</span></div>
     <div class="sb-grid" id="grid-heat">
       <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Rainy-Day-Culture-Shock-4387?utm_medium=github" target="_blank" rel="noopener">
         <p class="sb-card-tag">2024 &middot; Sasha</p>
@@ -443,7 +443,7 @@
     <button class="sb-see-more" type="button" data-grid="grid-heat" data-more="See 1 more &rarr;" data-less="Show less">See 1 more &rarr;</button>
 
   <div class="sb-cta">
-    <p class="sb-cta-text"><b>Make this summer count.</b>Read more real stories from international students across Korea &mdash; and whenever you're ready, post your own. There's no deadline to join: every story earns a lucky draw entry, all summer long.</p>
+    <p class="sb-cta-text"><b>The Summer Board is just the beginning.</b>Read more stories on living and studying in Korea.<br>And whenever you're ready, add yours!</p>
     <a class="sb-cta-btn" href="https://kcampus.kr/ko/real-life-reviews?utm_medium=github">Browse all reviews &rarr;</a>
   </div>
 </div>
