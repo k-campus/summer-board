@@ -25,10 +25,12 @@
     .sb-grid .sb-card, .sb-grid .sb-empty { flex: 0 0 150px; width: 150px; scroll-snap-align: start; }
     .sb-bar { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
     .sb-filter { flex-shrink: 0; }
-    .sb-cta { flex-direction: column; align-items: flex-start; }
-    .sb-cta-btn { width: 100%; text-align: center; }
-    .sb-mascot { width: 72px; right: 8px; }
-    .sb-intro-body { max-width: 100%; padding-right: 80px; }
+    .sb-cta { flex-direction: column !important; align-items: stretch !important; }
+    .sb-cta-text { max-width: 100% !important; }
+    .sb-cta-btn { display: block !important; width: 100% !important; text-align: center !important; box-sizing: border-box !important; }
+    .sb-mascot { display: none; }
+    .sb-intro-body { max-width: 100%; padding-right: 0; }
+    br.mo-br { display: block !important; }
     .sb-reward-grid { grid-template-columns: 1fr; }
     .sb-steps { grid-template-columns: 1fr !important; }
   }
@@ -73,6 +75,7 @@
   .sb-reward-card-count { font-size: 10.5px; font-weight: 700; color: #5C8A1F; }
 
   .sb-notes { margin-top: 14px; padding-top: 14px; border-top: 0.5px solid rgba(92,138,31,0.2); }
+  br.mo-br { display: none; }
   .sb-notes-item { display: flex; gap: 8px; margin-bottom: 6px; }
   .sb-notes-dot { color: #5C8A1F; font-size: 11px; line-height: 1.6; }
   .sb-notes-text { font-size: 11.5px; color: #5C6B45; line-height: 1.6; margin: 0; }
@@ -114,8 +117,8 @@
   <div class="sb-intro">
     <img class="sb-mascot" src="jandi_mascot.png" alt="">
     <p class="sb-intro-eyebrow">Summer 2026 &middot; Season Special Event</p>
-    <p class="sb-intro-title">Share your summer. We'll put it on the board &mdash; and enter you into our lucky draw.</p>
-    <p class="sb-intro-body">This board is built on Real Life Reviews from international students.<br>Ready to add yours and win summer essentials? Just follow these three steps.</p>
+    <p class="sb-intro-title">Share your summer.<br class="mo-br"> We'll put it on the board &mdash; and enter you into our lucky draw.</p>
+    <p class="sb-intro-body">This board is built on Real Life Reviews from international students.<br>Ready to add yours and win summer essentials?<br class="mo-br"> Just follow these three steps.</p>
     <div class="sb-steps">
       <div class="sb-step"><p class="sb-step-num">Step 1</p><p class="sb-step-action">WRITE.</p><p class="sb-step-text">Write about your experience on any of the 5 categories below.</p></div>
       <div class="sb-step"><p class="sb-step-num">Step 2</p><p class="sb-step-action">GET FEATURED.</p><p class="sb-step-text">K-campus will add your review to the Summer Board within 2 days!</p></div>
@@ -144,6 +147,7 @@
 
     <div class="sb-notes">
       <div class="sb-notes-item"><span class="sb-notes-dot">&#9679;</span><p class="sb-notes-text">Share a review between Aug. 3 &ndash; 31, 2026 and earn a lucky draw entry.</p></div>
+      <div class="sb-notes-item"><span class="sb-notes-dot">&#9679;</span><p class="sb-notes-text">Make sure to log in to K-campus before writing your review!</p></div>
       <div class="sb-notes-item"><span class="sb-notes-dot">&#9679;</span><p class="sb-notes-text">Every published review earns 1 lucky draw entry. The more summer stories you share, the more chances you have to win!</p></div>
     </div>
     <a class="sb-intro-cta" href="https://kcampus.kr/ko/real-life-reviews/new-draft?utm_medium=github">Add your story &rarr;</a>
