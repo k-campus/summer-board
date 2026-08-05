@@ -60,7 +60,10 @@
   .sb-cta-btn { flex-shrink: 0; font-size: 12px; font-weight: 600; color: #2B3D12; border-radius: 8px; padding: 9px 18px; background: #FFFFFF; border: 0.5px solid rgba(92,138,31,0.3); cursor: pointer; white-space: nowrap; text-decoration: none; }
   .sb-intro { background: #E8F4D2; border-radius: 16px; padding: 22px 24px; margin-bottom: 1.75rem; position: relative; overflow: hidden; }
   .sb-mascot { position: absolute; right: 14px; bottom: 0; width: 92px; height: auto; pointer-events: none; }
-  .sb-intro-eyebrow { font-size: 11px; font-weight: 600; color: #5C8A1F; letter-spacing: .04em; text-transform: uppercase; margin: 0 0 8px; }
+  .sb-intro-eyebrow { font-size: 11px; font-weight: 600; color: #5C8A1F; letter-spacing: .04em; text-transform: uppercase; margin: 0 0 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+  .sb-eyebrow-new { color: #D93025; display: inline-flex; align-items: center; gap: 4px; font-weight: 700; }
+  .sb-eyebrow-dot { width: 6px; height: 6px; background: #D93025; border-radius: 50%; animation: sb-blink 2s ease-in-out infinite; flex-shrink: 0; }
+  @keyframes sb-blink { 0%, 100% { opacity: 1; } 50% { opacity: .2; } }
   .sb-intro-title { font-family: "Objektiv XBold", "Objektiv", sans-serif; font-size: 19px; font-weight: 800; color: #2B3D12; margin: 0 0 8px; line-height: 1.4; }
   .sb-intro-body { font-size: 13px; color: #4D5E33; line-height: 1.6; margin: 0 0 16px; max-width: 560px; }
   .sb-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
@@ -107,6 +110,7 @@
   .sb-floating-cta:hover { transform: scale(1.04); }
   .sb-floating-cta--mobile { display: none; }
   .sb-swipe-hint { display: none; font-size: 11px; color: #5C8A1F; font-weight: 600; margin: 8px 0 20px; }
+  .sb-new-badge { position: absolute; top: 8px; right: 8px; background: #00D984; color: #013621; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; letter-spacing: .04em; }
   @media (max-width: 640px) {
     .sb-floating-cta { left: 16px; right: 16px; bottom: 16px; justify-content: center; width: auto; }
   }
@@ -123,7 +127,7 @@
 
   <div class="sb-intro">
     <img class="sb-mascot" src="jandi_mascot.png" alt="">
-    <p class="sb-intro-eyebrow">Summer 2026 &middot; Season Special Event</p>
+    <p class="sb-intro-eyebrow">Summer 2026 &middot; Season Special Event <span style="margin-left:5px;" class="sb-eyebrow-new"><span class="sb-eyebrow-dot"></span>2 new</span></p>
     <p class="sb-intro-title">Share your summer.<br class="mo-br"> We'll put it on the board &mdash; and enter you into our lucky draw.</p>
     <p class="sb-intro-body">This board is built on Real Life Reviews from international students.<br>Ready to add yours and win summer essentials?<br class="mo-br"> Just follow these three steps.</p>
     <div class="sb-steps">
@@ -333,6 +337,18 @@
   <div class="sb-section theme-mint" id="cat-activities">
     <div class="sb-cat-label"><span class="sb-cat-title">Seoul Activities</span></div>
     <div class="sb-grid" id="grid-activities">
+      <a class="sb-card" style="--bar-color:#4BB58A" data-new="2026-08-05" href="https://kcampus.kr/ko/real-life-reviews/skip-the-crowds--3-scenic-spots-you-should-visit-instead-10331?utm_medium=github" target="_blank" rel="noopener">
+        <span class="sb-new-badge">NEW</span>
+        <p class="sb-card-tag">2026 &middot; LarisaGolubchik</p>
+        <p class="sb-card-title">Skip the Crowds: 3 Scenic Spots You Should Visit Instead</p>
+        <p class="sb-card-meta"><span>Aug</span></p>
+      </a>
+      <a class="sb-card" style="--bar-color:#4BB58A" data-new="2026-08-05" href="https://kcampus.kr/ko/real-life-reviews/--.-.-!-.-.----!---10332?utm_medium=github" target="_blank" rel="noopener">
+        <span class="sb-new-badge">NEW</span>
+        <p class="sb-card-tag">2026 &middot; Royaninii</p>
+        <p class="sb-card-title">올여름 야구가 한창 인기를 끌 때 서울에서 야구 경기를 보러 갔어요.</p>
+        <p class="sb-card-meta"><span>Seoul &middot; Aug</span></p>
+      </a>
       <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/A-Tour-of-Safety-(and-Stamps):-Jongno's-Police-Station-Tour-7131?utm_medium=github" target="_blank" rel="noopener">
         <p class="sb-card-tag">2025 &middot; shichutian02</p>
         <p class="sb-card-title">A Tour of Safety (and Stamps): Jongno&rsquo;s Police Station Tour</p>
@@ -348,12 +364,12 @@
         <p class="sb-card-title">From vinyl to cassettes: 3 music cafes in Seoul</p>
         <div class="sb-card-meta"><span>Hongdae&middot;Seongsu</span></div>
       </a>
-      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/A-Day-Out-in-Seoul-for-Under-10,000W---Han-River-Vibes-6706?utm_medium=github" target="_blank" rel="noopener">
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/A-Day-Out-in-Seoul-for-Under-10,000W---Han-River-Vibes-6706?utm_medium=github" target="_blank" rel="noopener">
         <p class="sb-card-tag">2025 &middot; Lejla</p>
         <p class="sb-card-title">A Day Out in Seoul for Under &#8361;10,000 &ndash; Han River Vibes</p>
         <div class="sb-card-meta"><span>Han River</span></div>
       </a>
-      <a class="sb-card" href="https://kcampus.kr/ko/real-life-reviews/Weekend-Picnic-at-Han-River-for-10,000won-6690?utm_medium=github" target="_blank" rel="noopener">
+      <a class="sb-card sb-card-extra" style="display:none" href="https://kcampus.kr/ko/real-life-reviews/Weekend-Picnic-at-Han-River-for-10,000won-6690?utm_medium=github" target="_blank" rel="noopener">
         <p class="sb-card-tag">2025 &middot; bngng</p>
         <p class="sb-card-title">Weekend Picnic at Han River for &#8361;10,000</p>
         <div class="sb-card-meta"><span>Han River</span></div>
@@ -395,7 +411,7 @@
       </a>
     </div>
   </div>
-    <button class="sb-see-more" type="button" data-grid="grid-activities" data-more="See 7 more &rarr;" data-less="Show less">See 7 more &rarr;</button>
+    <button class="sb-see-more" type="button" data-grid="grid-activities" data-more="See 9 more &rarr;" data-less="Show less">See 9 more &rarr;</button>
     <p class="sb-swipe-hint">Swipe to see more &rarr;</p>
 
   <div class="sb-section theme-yellow" id="cat-food">
@@ -475,6 +491,15 @@
       var target = document.getElementById(btn.dataset.target);
       if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
+  });
+
+  document.querySelectorAll('[data-new]').forEach(function (card) {
+    var published = new Date(card.dataset.new);
+    var diff = (new Date() - published) / (1000 * 60 * 60 * 24);
+    if (diff > 7) {
+      var badge = card.querySelector('.sb-new-badge');
+      if (badge) badge.style.display = 'none';
+    }
   });
 
   document.querySelectorAll('.sb-see-more').forEach(function (btn) {
